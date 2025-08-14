@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const connectDB = require('./config/db');
-const pingRoute = require('./routes/ping');
-const errorHandler = require('./middlewares/errorHandler');
+const connectDB = require('./src/config/db');
+const pingRoute = require('./src/routes/ping');
+const authRoute = require('./src/routes/authRoutes');
+const errorHandler = require('./src/middlewares/errorHandler');
 
 /* console.log('Type of pingRoute:', typeof pingRoute);
 console.log('Type of errorHandler:', typeof errorHandler); */
@@ -16,7 +17,9 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 //routes
-app.use('/api',pingRoute);
+app.use('/api/ping',pingRoute);
+app.use('/api/auth',authRoute);
+
 
 //errorHandling
 app.use(errorHandler);
