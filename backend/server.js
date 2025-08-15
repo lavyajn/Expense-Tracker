@@ -11,8 +11,14 @@ const errorHandler = require('./src/middlewares/errorHandler');
 console.log('Type of errorHandler:', typeof errorHandler); */
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:5173', 
+  optionsSuccessStatus: 200 // For legacy browser support
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
+
 
 const PORT = process.env.PORT || 5000;
 

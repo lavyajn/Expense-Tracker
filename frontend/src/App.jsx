@@ -1,7 +1,8 @@
 import React from "react";
 import LoginPage from "./pages/LoginPage";
-import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom'
 import SignupPage from "./pages/SignupPage";
+import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom'
+
 
 const Navigation = () => (
   <nav>

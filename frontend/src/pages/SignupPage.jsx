@@ -7,7 +7,6 @@ const SignupPage = () => {
 
   const [mobileNumber,setMobileNumber] = useState('');
   const [password,setPassword] = useState('');
-
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState('');
   const [success,setSuccess] = useState('');
@@ -18,7 +17,7 @@ const SignupPage = () => {
 
     setError('');
     setSuccess('');
-    setLoading('');
+    setLoading(true);
 
     try {
       
@@ -31,13 +30,14 @@ const SignupPage = () => {
 
       const response = await axios.post(url, userData);
       setSuccess(response.data.message);
-      setLoading(false);
 
     }catch(err) {
-      
-      if (err.response && err.response.data) {
+
+      console.log('Error received from backend:', err.response);
+
+      if (err.response && err.response.data && err.response.data.message) {
         // If the server sent a specific message (like our validation error), use it.
-        setError(err.response.data.message || 'An unknown error occurred.');
+        setError(err.response.data.message);
       } else {
         // This handles cases where no response was received (e.g., network error, CORS issue).
         setError('Cannot connect to the server. Please try again later.');
@@ -63,6 +63,9 @@ const SignupPage = () => {
       <h2 className={styles.title}>Create Your Account</h2>
 
       <form onSubmit={handleSubmit}>
+
+        {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}>{error}</p>}
+        {success && <p style={{ color: 'green', textAlign: 'center', marginBottom: '10px' }}>{success}</p>}
 
         <div className={styles.inputGroup}>
           <label htmlFor='mobile' className={styles.label}>
@@ -94,7 +97,9 @@ const SignupPage = () => {
           />
         </div>
 
-        <button type="submit" className={styles.button}>Sign In</button>
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? 'Signing Up...' : 'Sign Up'}
+        </button>
 
       </form>
       <p className={styles.loginLink}>Already have an account? <Link to="/login">Login</Link>
